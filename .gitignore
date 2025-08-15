@@ -1,0 +1,2 @@
+# Ignore Maven/Quarkus build output
+target/
