@@ -1,24 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <groupId>com.apibanking</groupId>
     <artifactId>product-management</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <!-- ========================
+         Project Properties
+         ======================== -->
     <properties>
-        <compiler-plugin.version>3.14.0</compiler-plugin.version>
+        <!-- Java version & build encoding -->
         <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.25.2</quarkus.platform.version>
-        <skipITs>true</skipITs>
+
+        <!-- Plugin versions -->
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.3</surefire-plugin.version>
+
+        <!-- Quarkus platform BOM -->
+        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.version>3.25.2</quarkus.platform.version>
+
+        <!-- External library versions -->
         <lombok.version>1.18.32</lombok.version>
         <mockito.version>5.11.0</mockito.version>
+
+        <!-- Test settings -->
+        <skipITs>true</skipITs>
     </properties>
 
+    <!-- ========================
+         Dependency Management
+         (Import Quarkus BOM)
+         ======================== -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -31,52 +50,67 @@
         </dependencies>
     </dependencyManagement>
 
+    <!-- ========================
+         Dependencies
+         ======================== -->
     <dependencies>
+
+        <!-- ===== Core REST API & JSON ===== -->
+        <!-- RESTEasy + Jackson for building REST APIs with JSON support -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-jackson</artifactId>
         </dependency>
+
+        <!-- ===== Database & ORM (Reactive) ===== -->
+        <!-- Hibernate Reactive Panache for ORM support -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-reactive-panache</artifactId>
         </dependency>
+        <!-- MySQL Reactive client for non-blocking DB calls -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-reactive-mysql-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-openapi</artifactId>
-        </dependency>
+
+        <!-- ===== Validation ===== -->
+        <!-- Bean Validation API implementation -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
+
+        <!-- ===== API Documentation ===== -->
+        <!-- OpenAPI + Swagger UI for documenting REST endpoints -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5</artifactId>
-            <scope>test</scope>
+            <artifactId>quarkus-smallrye-openapi</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.rest-assured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- ===== Code Generation ===== -->
+        <!-- Lombok to reduce boilerplate code like getters/setters -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-smallrye-openapi</artifactId>
-        </dependency>
+
+        <!-- ===== Testing ===== -->
+        <!-- Quarkus-specific JUnit 5 integration -->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- REST Assured for API endpoint testing -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mockito for mocking in unit tests -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -86,8 +120,12 @@
 
     </dependencies>
 
+    <!-- ========================
+         Build Configuration
+         ======================== -->
     <build>
         <plugins>
+            <!-- Quarkus Maven Plugin (build & code generation) -->
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
@@ -103,6 +141,8 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Compiler plugin -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
@@ -112,6 +152,8 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
+
+            <!-- Unit test plugin -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -122,6 +164,8 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <!-- Integration test plugin -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -144,7 +188,11 @@
         </plugins>
     </build>
 
+    <!-- ========================
+         Profiles
+         ======================== -->
     <profiles>
+        <!-- Native build profile for GraalVM -->
         <profile>
             <id>native</id>
             <activation>

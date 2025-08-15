@@ -1,30 +1,39 @@
 # Quarkus Reactive Product Management API
 
-This is a small application built with **Quarkus Reactive** to create a RESTful API for a product management system. It supports standard CRUD operations and includes additional features like stock availability checks and sorting.
+This is a **Quarkus Reactive** application that exposes a RESTful API for managing products.  
+It supports **CRUD** operations, stock availability checks, and sorting.  
+The application uses **reactive programming** for high scalability and low-latency database interactions.
 
-### 🚀 Technologies Used
+---
 
-* **Quarkus**: A Kubernetes-native Java stack tailored for OpenJDK HotSpot and GraalVM.
-* **Hibernate Reactive with Panache**: For reactive, non-blocking data persistence and simplified entity management.
-* **MySQL Reactive Client**: The reactive driver for connecting to a MySQL database.
-* **Mutiny**: A reactive programming library used for handling asynchronous data streams.
-* **RESTEasy Reactive**: For building the RESTful API endpoints.
-* **Jakarta Bean Validation**: For validating data on the `Product` entity.
+## 🚀 Technologies Used
 
-***
+- **Quarkus** – Kubernetes-native Java stack for OpenJDK HotSpot & GraalVM
+- **Hibernate Reactive with Panache** – Non-blocking ORM with simplified entity management
+- **MySQL Reactive Client** – Reactive MySQL driver
+- **Mutiny** – Reactive programming library for async event streams
+- **RESTEasy Reactive** – Reactive REST API framework for Quarkus
+- **Jakarta Bean Validation** – Entity data validation with annotations
 
-### ⚙️ How to Run the Application
+---
 
-#### Prerequisites
-* Java 17+
-* Maven
-* Docker (for running MySQL)
+## ⚙️ Prerequisites
 
-#### 1. Start the MySQL Database
-Use Docker to quickly set up a local MySQL instance:
+Before you start, ensure you have the following installed:
 
+- **Java 17+**
+- **Maven 3.9+**
+- **Docker** (if you want to run MySQL locally in a container)
+
+---
+
+## 🛠 Local Setup & Run
+
+### 1️⃣ Start MySQL in Docker
+Run the following to start MySQL 8 in a container:
 ```bash
-docker run --ulimit nofile=10240:10240 --name quarkus-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=productdb -p 3306:3306 -d mysql:8
-
-#### 2. Access swagger api documentation 
-http://localhost:8080/q/swagger-ui/
+docker run --ulimit nofile=10240:10240 --name quarkus-mysql \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e MYSQL_DATABASE=productdb \
+  -p 3306:3306 \
+  -d mysql:8

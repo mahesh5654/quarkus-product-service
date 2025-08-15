@@ -1,2 +1,80 @@
-# Ignore Maven/Quarkus build output
+# Maven
+target/
+pom.xml.tag
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+build/
+
+# Quarkus specific
+.quarkus/
+quarkus-app/
+quarkus-runner.jar
+*-runner.jar
+*-native-image-source-jar/
+*-native-image-source-jar.jar
+# Quarkus dev services database files (e.g., H2, PostgreSQL, MySQL data)
+.devservices/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/ # If you also use VS Code
+
+# Eclipse
+.project
+.classpath
+.settings/
+.apt_generated/
+.factorypath
+.metadata/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Compiled class files
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Backup Files #
+*~
+#*#
+*.bak
+*.swp
+*.swo
+
+# Temporary Files #
+*.tmp
+*.temp
+
+# Configuration files (avoid committing sensitive data)
+*.properties.local
+*.properties.dev
+*.properties.prod
+application.properties.example # if you use this pattern for examples
+# For database passwords, etc.
+src/main/resources/application-*.properties
+!src/main/resources/application.properties # Keep the main one if it's generic
+
+# Native images (large files)
+# Typically generated in target/ but explicitly listed for clarity/safety
+*runner
+
+# Native image build directory for Linux/macOS
 target/
