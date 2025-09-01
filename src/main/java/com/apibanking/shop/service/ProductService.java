@@ -25,10 +25,15 @@ public class ProductService {
     }
 
     public Uni<Product> getById(Long id) {
-        return Product.<Product>findById(id) // Use the type parameter here
+        return findProductById(id)
                 .onItem()
                 .ifNull()
                 .failWith(() -> new ProductNotFoundException("Product with ID " + id + " not found."));
+    }
+
+    // Make this protected to allow mocking
+    protected Uni<Product> findProductById(Long id) {
+        return Product.findById(id);
     }
 
     public Uni<Product> update(Long id, Product product) {
@@ -51,13 +56,16 @@ public class ProductService {
     }
 
     public Uni<Boolean> checkStock(Long id, int count) {
-        return Product.<Product>findById(id)
+        return findProductById(id)
                 .onItem().ifNotNull().transform(product -> product.quantity >= count)
                 .onItem().ifNull().failWith(() -> new ProductNotFoundException("Product with ID " + id + " not found."));
     }
 
-    public Uni<List<Product>> sortByPrice() {
-        // Hibernate Reactive will run: SELECT * FROM products ORDER BY price ASC
+    protected Uni<List<Product>> listProductsSortedByPrice() {
         return Product.list("ORDER BY price ASC");
+    }
+
+    public Uni<List<Product>> sortByPrice() {
+        return listProductsSortedByPrice();
     }
 }
